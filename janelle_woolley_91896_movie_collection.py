@@ -88,12 +88,42 @@
 # the next movie id
 # Add to dictionary
 
-# Keeps looping so the menu will apear again
-# after an option is complete
-# Get a menu option by running function
-# If menu_option is 1 call functions to add a movie
-# If menu_option is 2 call functions to edit movie length
-# If menu_option is 3 call functions to print movie length
-# If menu_option is 4 call functions to print movies
-# If the menu_option was 0 end loop
-# Otherwise print error message
+if __name__ == "__main__":
+    movies = {1: {"Title": "We Can Be Heroes",
+                  "Director": "Robert Rodriguez",
+                  "Run Time": 100},
+              2: {"Title": "Enola Holmes",
+                  "Director": "Harry Bradbeer",
+                  "Run Time": 124},
+              3: {"Title": "Feel the Beat",
+                  "Director": "Elissa Down",
+                  "Run Time": 110}}
+
+    # Keeps looping so the menu will apear again
+    # after an option is complete
+    code_running = True
+    while code_running:
+        # Get a menu option by running function
+        menu_option = get_menu_option()
+        if menu_option == 0:
+            # If the menu_option was 0 end loop
+            code_running = False
+        # If menu_option is 1 call functions to add a movie
+        elif menu_option == 1:
+            add_movie(movies)
+        # If menu_option is 2 call functions to edit movie length
+        elif menu_option == 2:
+            movie_selection = movie_select(movies)
+            edit_movie_length(movies, movie_selection)
+        # If menu_option is 3 call functions to print movie length
+        elif menu_option == 3:
+            movie_selection = movie_select(movies)
+            movies_with_hours = mins_to_hours(movies)
+            print_movie_length(movies_with_hours, movie_selection)
+        # If menu_option is 4 call functions to print movies
+        elif menu_option == 4:
+            movies_with_hours = mins_to_hours(movies)
+            print_movies(movies_with_hours)
+        # Otherwise print error message
+        else:
+            print("Please enter a valid option")
