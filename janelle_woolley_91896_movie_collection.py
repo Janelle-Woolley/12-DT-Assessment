@@ -14,15 +14,40 @@
 # Max length of movie is 299 Mins / 4:59 Hours
 
 # Menu Function
-# Contiues to loop until an option is chosen
-# Ask user for input
-# Use try and except to make sure the input is a number
-# Check if input is too short (less than 1 characters)
-# Check if the input is an option, return it
-# Otherwise print error message
+def get_menu_option():
+    MINIMUM_LENGTH = 1
+    choices = [1, 2, 3, 4, 0]
+    # Contiues to loop until an option is chosen
+    getting_choice = True
+    while getting_choice:
+        # Use try and except to make sure the input is a number
+        try:        
+            # Ask user for input
+            choice = int(input("\nPlease chose an option\n"
+                               "1: Add Movie\n"
+                               "2: Edit Movie Length\n"
+                               "3: Print Movie Length\n"
+                               "4: Print Movies\n"
+                               "0: Quit\n"))
+
+            # Check if the input is an option, if so end loop
+            if choice in choices:
+                getting_choice = False
+
+            # Otherwise print error message
+            else:
+                print("Please enter a valid option!")
+
+        except ValueError:
+            print("Please enter a valid option!")
+
+    return choice
+
 
 # Movie Select Function
 # Paramaters: dictionary
+def movie_select(dictionary):
+    pass
 # Continues to loop until a movie is selected
 # Asks user for an input
 # Use try and except to make sure the input is a number
@@ -32,6 +57,8 @@
 
 # Mins to Hours Function
 # Parameters: dictionary
+def mins_to_hours(dictionary):
+    pass
 # MINS_TO_HOURS = 60
 # Loops through the dictionary
 # Converts mins to hours
@@ -42,17 +69,23 @@
 
 # Print Movie Function
 # Parameters: hours_dictionary
+def print_movies(hours_dictionary):
+    pass
 # Loops through the dictionary
 # Assigns variables to the movie info for printing
 # Prints out movie info
 
 # Print Movie Length Function
 # Parameters: hours_dictionary, movie_selection
+def print_movie_length(hours_dictionary, movie_selection):
+    pass
 # Assigns variable to the movie length for the movie selection
 # Prints out movie_length
 
 # Edit Movie Length Function
 # Parameters: dictionary, movie_selection
+def edit_movie_length(dictionary, movie_selection):
+    pass
 # Assign movie info variables for updating dictionary
 # Asks user for input
 # Use try and except to make sure the input is a number
@@ -65,6 +98,8 @@
 
 # Add Movie Function
 # Parameters: dictionary
+def add_movie(dictionary):
+    pass
 # Keep looping until input is allowed
 # Ask user for movie_name input
 # Check if input is too short (less than 1 characters)
