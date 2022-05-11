@@ -23,7 +23,7 @@ def get_menu_option():
         # Use try and except to make sure the input is a number
         try:        
             # Ask user for input
-            choice = int(input("\nPlease chose an option\n"
+            choice = int(input("Please chose an option\n"
                                "1: Add Movie\n"
                                "2: Edit Movie Length\n"
                                "3: Print Movie Length\n"
@@ -36,24 +36,38 @@ def get_menu_option():
 
             # Otherwise print error message
             else:
-                print("Please enter a valid option!")
+                print("\nPlease enter a valid option!\n")
 
         except ValueError:
-            print("Please enter a valid option!")
+            print("\nPlease enter a valid option!\n")
 
     return choice
 
 
 # Movie Select Function
-# Paramaters: dictionary
 def movie_select(dictionary):
-    pass
-# Continues to loop until a movie is selected
-# Asks user for an input
-# Use try and except to make sure the input is a number
-# Check if input is too short (less than 1 characters)
-# Check if the input is an option, return it
-# Otherwise print error message
+    # Continues to loop until a movie is selected
+    getting_movie_selection = True
+    while getting_movie_selection:
+        # Use try and except to make sure the input is a number
+        try:
+            # Asks user for an input
+            movie_selected = int(input("Please enter the key for the movie "
+                                       "you would like to select: "))
+            
+            # Check if the input is an option, if so end loop
+            if movie_selected in dictionary:
+                getting_movie_selection = False
+
+            # Otherwise print error message
+            else:
+                print("\nPlease enter a valid option!")
+
+        except ValueError:
+            print("\nPlease enter a valid option!")
+
+    return movie_selected
+
 
 # Mins to Hours Function
 # Parameters: dictionary
@@ -161,4 +175,4 @@ if __name__ == "__main__":
             print_movies(movies_with_hours)
         # Otherwise print error message
         else:
-            print("Please enter a valid option")
+            print("\nPlease enter a valid option!\n")
