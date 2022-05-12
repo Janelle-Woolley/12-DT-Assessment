@@ -111,26 +111,53 @@ def print_movie_length(hours_dictionary, movie_selection):
 # Assigns variable to the movie length for the movie selection
 # Prints out movie_length
 
+
 # Edit Movie Length Function
-# Parameters: dictionary, movie_selection
-def edit_movie_length(dictionary, movie_selection):
-    pass
-# Assign movie info variables for updating dictionary
-# Asks user for input
-# Use try and except to make sure the input is a number
-# Check if input is too short (less than 1 characters)
-# Check if input is less than or equal to 0
-# Check if input is more than 299
-# Check if input is not equal to original length
-# If true update dictionary
-# Otherwise print error message
+def edit_movie_length(dictionary, key):
+    MIN_RUNTIME = 1
+    MAX_RUNTIME = 300
+
+    # Assign movie info variables for updating dictionary
+    movie_info = dictionary[key]
+    movie = movie_info["Title"]
+    director = movie_info["Director"]
+    runtime = movie_info["Run Time"]
+
+    # Keep looping until input meets criteria
+    getting_runtime = True
+    while getting_runtime:
+        # Use try and except to make sure the input is a number
+        try:
+            # Asks user for input
+            new_runtime = int(input("Please enter the movie's"
+                                " runtime in minutes: "))
+
+            # Check is runtime is between the min and max
+            if new_runtime not in range(MIN_RUNTIME, MAX_RUNTIME):
+                print("\nPlease enter a time between 1 and 299 mins")
+
+            # Check if input is not equal to original length
+            elif new_runtime != runtime:
+                getting_runtime = False
+
+            # Otherwise print error message
+            else:
+                print("\nPlease enter a time between 1 and 299 mins")
+            
+        except ValueError:
+            print("\nPlease enter the time in minutes")
+
+    # Update dictionary
+    dictionary.update({key: {"Title": movie,
+                             "Director": director,
+                             "Run Time": new_runtime}})
 
 
 # Add Movie Function
-# Parameters: dictionary
 def add_movie(dictionary):
-    MIN_MOVIE_NAME_LENGTH = 1
+    MIN_MOVIE_NAME_LENGTH = MIN_RUNTIME = ADD_TO_GET_KEY = 1
     MIN_DIRECTOR_NAME_LENGTH = 3
+    MAX_RUNTIME = 300
     # Keep looping until input is allowed
     getting_movie_name = True
     while getting_movie_name:
@@ -160,7 +187,7 @@ def add_movie(dictionary):
                                 " runtime in minutes: "))
 
             # Check is runtime is between the min and max
-            if runtime in range(1,300):
+            if runtime in range(MIN_RUNTIME, MAX_RUNTIME):
                 getting_runtime = False
             else:
                 print("\nPlease enter a time between 1 and 299 mins")
@@ -168,8 +195,8 @@ def add_movie(dictionary):
         except ValueError:
             print("\nPlease enter the time in minutes")
 
-    # Use the length of the dictionary to determine the next movie id
-    key = len(dictionary) + 1
+    # Use the length of the dictionary to determine the movie key
+    key = len(dictionary) + ADD_TO_GET_KEY
 
     # Add to dictionary
     dictionary.update({key: {"Title": movie_name.title(),
