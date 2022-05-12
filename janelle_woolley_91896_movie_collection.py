@@ -23,7 +23,7 @@ def get_menu_option():
         # Use try and except to make sure the input is a number
         try:        
             # Ask user for input
-            choice = int(input("Please chose an option\n"
+            choice = int(input("\nPlease chose an option\n"
                                "1: Add Movie\n"
                                "2: Edit Movie Length\n"
                                "3: Print Movie Length\n"
@@ -81,6 +81,21 @@ def mins_to_hours(dictionary):
 # Add to new hours_dictionary
 # Return hours_dictionary
 
+# Print Functions
+# FUNCTION FOR:
+# selection for edit(name, mins)
+# selection for print solo(name)
+# print solo(name, hours + mins)
+# print all(name, director?, hours + mins)
+# FUNCTION NEEDS:
+# menu_option, dictionary
+# menu_option, dictionary
+# menu_option, movie_selection, hours_dictionary
+# menu_option, hours_dictionary
+def print_functions(menu_option, movie_selection,
+                    dictionary, hours_dictionary):
+    pass
+
 # Print Movie Function
 # Parameters: hours_dictionary
 def print_movies(hours_dictionary):
@@ -110,32 +125,57 @@ def edit_movie_length(dictionary, movie_selection):
 # If true update dictionary
 # Otherwise print error message
 
+
 # Add Movie Function
 # Parameters: dictionary
 def add_movie(dictionary):
-    pass
-# Keep looping until input is allowed
-# Ask user for movie_name input
-# Check if input is too short (less than 1 characters)
-# If not end loop
-# Otherwise print error message
-# Keep looping until input is allowed
-# Ask user for movie_director input
-# Check if input is too short (less than 1 characters)
-# If not end loop
-# Otherwise print error message
-# Keep looping until input is allowed
-# Ask user for mins input
-# Use try and except to make sure the input is a number
-# Check if input is too short (less than 1 characters)
-# Check if input is less than or equal to 0
-# Check if input is more than 299
-# Check if input is not equal to original length
-# If true end loop
-# Otherwise print error message
-# Use the length of the dictionary to determine
-# the next movie id
-# Add to dictionary
+    MIN_MOVIE_NAME_LENGTH = 1
+    MIN_DIRECTOR_NAME_LENGTH = 3
+    # Keep looping until input is allowed
+    getting_movie_name = True
+    while getting_movie_name:
+        # Ask user for movie_name input
+        movie_name = input("Please enter the name of the movie: ")
+        # Check if input is too short (less than 1 characters)
+        if len(movie_name) > MIN_MOVIE_NAME_LENGTH:
+            # If not end loop
+            getting_movie_name = False
+        # Otherwise print error message
+        else:
+            print("\nPlease enter a movie name!")
+
+    getting_director = True
+    while getting_director:
+        director = input("Please enter the name of the director: ")
+        if len(director) > MIN_DIRECTOR_NAME_LENGTH:
+            getting_director = False
+        else:
+            print("\nPlease enter a valid name!")
+
+    getting_runtime = True
+    while getting_runtime:
+        # Use try and except to make sure the input is a number
+        try:
+            runtime = int(input("Please enter the movie's"
+                                " runtime in minutes: "))
+
+            # Check is runtime is between the min and max
+            if runtime in range(1,300):
+                getting_runtime = False
+            else:
+                print("\nPlease enter a time between 1 and 299 mins")
+            
+        except ValueError:
+            print("\nPlease enter the time in minutes")
+
+    # Use the length of the dictionary to determine the next movie id
+    key = len(dictionary) + 1
+
+    # Add to dictionary
+    dictionary.update({key: {"Title": movie_name.title(),
+                             "Director": director.title(),
+                             "Run Time": runtime}})
+
 
 if __name__ == "__main__":
     movies = {1: {"Title": "We Can Be Heroes",
@@ -154,8 +194,8 @@ if __name__ == "__main__":
     while code_running:
         # Get a menu option by running function
         menu_option = get_menu_option()
+        # If the menu_option was 0 end loop
         if menu_option == 0:
-            # If the menu_option was 0 end loop
             code_running = False
         # If menu_option is 1 call functions to add a movie
         elif menu_option == 1:
