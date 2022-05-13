@@ -70,16 +70,41 @@ def movie_select(dictionary):
 
 
 # Mins to Hours Function
-# Parameters: dictionary
 def mins_to_hours(dictionary):
-    pass
-# MINS_TO_HOURS = 60
-# Loops through the dictionary
-# Converts mins to hours
-# hours = mins * MINS_TO_HOURS
-# Assigns variables to movie info for adding to new hours_dictionary
-# Add to new hours_dictionary
-# Return hours_dictionary
+    AMOUNT_MINS_IN_HOURS = 60
+    ADD_HOUR = 1
+    hours_dictionary = {}
+
+    # Loops through the dictionary
+    for key in dictionary.keys():
+        movie_info = dictionary[key]
+        mins_runtime = movie_info["Run Time"]
+
+        # Will keep looping until mins are under 60
+        getting_hours = True
+        hours_count = 0
+        while getting_hours:
+            if mins_runtime > 60:
+                mins_runtime = mins_runtime - AMOUNT_MINS_IN_HOURS
+                hours_count = hours_count + ADD_HOUR
+            else:
+                getting_hours = False
+
+        # adds hours and mins to list then converts to string to join them
+        runtime_string = "{}h {}m".format(hours_count, mins_runtime)
+
+        # Assigns variables to movie info for adding to new dictionary
+        movie = movie_info["Title"]
+        director = movie_info["Director"]
+
+        # Add to new dictionary
+        hours_dictionary.update({key: {"Title": movie,
+                                       "Director": director,
+                                       "Run Time": runtime_string}})
+
+    # Return new dictionary
+    return hours_dictionary
+
 
 # Print Functions
 # FUNCTION FOR:
@@ -136,7 +161,7 @@ def edit_movie_length(dictionary, key):
             if new_runtime not in range(MIN_RUNTIME, MAX_RUNTIME):
                 print("\nPlease enter a time between 1 and 299 mins")
 
-            # Check if input is not equal to original length
+            # Check if runtime is not equal to original length
             elif new_runtime != runtime:
                 getting_runtime = False
 
