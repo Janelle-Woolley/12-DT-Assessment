@@ -18,7 +18,7 @@ def get_menu_option():
     getting_choice = True
     while getting_choice:
         # Use try and except to make sure the input is a number
-        try:        
+        try:
             # Ask user for input
             choice = int(input("\nPlease chose an option\n"
                                "1: Add Movie\n"
@@ -54,7 +54,7 @@ def movie_select(dictionary):
             # Asks user for an input
             movie_selected = int(input("Please enter the key for the movie "
                                        "you would like to select: "))
-            
+
             # Check if the input is an option, if so end loop
             if movie_selected in dictionary:
                 getting_movie_selection = False
@@ -166,7 +166,7 @@ def edit_movie_length(dictionary, key):
         try:
             # Asks user for input
             new_runtime = int(input("Please enter the movie's"
-                                " runtime in minutes: "))
+                                    " runtime in minutes: "))
 
             # Check is runtime is between the min and max
             if new_runtime not in range(MIN_RUNTIME, MAX_RUNTIME):
@@ -179,7 +179,7 @@ def edit_movie_length(dictionary, key):
             # Otherwise print error message
             else:
                 print("\nPlease enter a time between 1 and 299 mins")
-            
+
         except ValueError:
             print("\nPlease enter the time in minutes")
 
@@ -232,7 +232,7 @@ def add_movie(dictionary):
                 getting_runtime = False
             else:
                 print("\nPlease enter a time between 1 and 299 mins")
-            
+
         except ValueError:
             print("\nPlease enter the time in minutes")
 
