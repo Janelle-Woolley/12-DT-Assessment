@@ -1,20 +1,17 @@
 ##
 # janelle_woolley_91896_movie_collection.py
-# Allows user to Add, Edit, and Print, Movie's and Movie length
+# Allows user to Add, Edit, and Print Movie's and Movie length
 #
 # Author: Janelle Woolley
 # 09/05/22 Version_1
 
-# Add movie (Title, director, length): Mins
-# Edit movie length: Mins
-# Print movie length: Hours + Mins
-# Print movie (Title, director, length): Hours + Mins
-# Quit
-
-# Max length of movie is 299 Mins / 4:59 Hours
 
 # Menu Function
 def get_menu_option():
+    """
+    Ask user to select an option
+    Returns selected option
+    """
     MINIMUM_LENGTH = 1
     choices = [1, 2, 3, 4, 0]
     # Contiues to loop until an option is chosen
@@ -46,6 +43,9 @@ def get_menu_option():
 
 # Movie Select Function
 def movie_select(dictionary):
+    """
+    Ask user to select a key then returns it
+    """
     # Continues to loop until a movie is selected
     getting_movie_selection = True
     while getting_movie_selection:
@@ -71,6 +71,10 @@ def movie_select(dictionary):
 
 # Mins to Hours Function
 def mins_to_hours(dictionary):
+    """
+    Converts runtime in minutes to runtime in hours & minutes
+    Adds to new dictionary and returns new dictionary
+    """
     AMOUNT_MINS_IN_HOURS = 60
     ADD_HOUR = 1
     hours_dictionary = {}
@@ -90,7 +94,7 @@ def mins_to_hours(dictionary):
             else:
                 getting_hours = False
 
-        # adds hours and mins to list then converts to string to join them
+        # Takes hours and mins and puts them in string
         runtime_string = "{}h {}m".format(hours_count, mins_runtime)
 
         # Assigns variables to movie info for adding to new dictionary
@@ -107,38 +111,45 @@ def mins_to_hours(dictionary):
 
 
 # Print Functions
-# FUNCTION FOR:
-# selection for edit(name, mins)
-# selection for print solo(name)
-# print solo(name, hours + mins)
-# print all(name, director?, hours + mins)
-# FUNCTION NEEDS:
-# menu_option, dictionary
-# menu_option, dictionary
-# menu_option, movie_selection, hours_dictionary
-# menu_option, hours_dictionary
-def print_functions(menu_option, movie_selection,
-                    dictionary, hours_dictionary):
-    pass
+def print_functions(menu_option, movie_selection, dictionary):
+    """
+    Prints movie info for showing options, printing movie length
+    and printing all movie info
+    """
+    # Checks if the print function is being called to show options
+    if movie_selection == "Show Options":
+        # Loops through dictionary printing movie name and key
+        for key in dictionary.keys():
+            movie_info = dictionary[key]
+            movie = movie_info["Title"]
+            print("{}\t{}".format(key, movie))
 
-# Print Movie Function
-# Parameters: hours_dictionary
-def print_movies(hours_dictionary):
-    pass
-# Loops through the dictionary
-# Assigns variables to the movie info for printing
-# Prints out movie info
+    # Checks if the print function is being called for option 3
+    # and isn't to show options
+    elif menu_option == 3 and movie_selection != "Show Options":
+        movie_info = dictionary[movie_selection]
+        movie = movie_info["Title"]
+        runtime = movie_info["Run Time"]
+        print("\n{}\t{}\t{}".format(movie_selection, movie, runtime))
 
-# Print Movie Length Function
-# Parameters: hours_dictionary, movie_selection
-def print_movie_length(hours_dictionary, movie_selection):
-    pass
-# Assigns variable to the movie length for the movie selection
-# Prints out movie_length
+    elif menu_option == 4:
+        for key in dictionary.keys():
+            movie_info = dictionary[key]
+            movie = movie_info["Title"]
+            director = movie_info["Director"]
+            runtime = movie_info["Run Time"]
+            print("{}\t{}\t{}\t{}".format(key, movie,
+                                          director, runtime))
+
+    else:
+        print("Sorry Something Has Gone Wrong")
 
 
 # Edit Movie Length Function
 def edit_movie_length(dictionary, key):
+    """
+    Asks user for a new run time then updates dictionary
+    """
     MIN_RUNTIME = 1
     MAX_RUNTIME = 300
 
@@ -180,6 +191,10 @@ def edit_movie_length(dictionary, key):
 
 # Add Movie Function
 def add_movie(dictionary):
+    """
+    Ask user for movie name, director, and length
+    Then adds them to the dictionary
+    """
     MIN_MOVIE_NAME_LENGTH = MIN_RUNTIME = ADD_TO_GET_KEY = 1
     MIN_DIRECTOR_NAME_LENGTH = 3
     MAX_RUNTIME = 300
@@ -196,6 +211,7 @@ def add_movie(dictionary):
         else:
             print("\nPlease enter a movie name!")
 
+    # Does the same as above but for getting the director name
     getting_director = True
     while getting_director:
         director = input("Please enter the name of the director: ")
@@ -254,17 +270,21 @@ if __name__ == "__main__":
             add_movie(movies)
         # If menu_option is 2 call functions to edit movie length
         elif menu_option == 2:
+            print_functions(menu_option, "Show Options", movies)
             movie_selection = movie_select(movies)
             edit_movie_length(movies, movie_selection)
         # If menu_option is 3 call functions to print movie length
         elif menu_option == 3:
+            print_functions(menu_option, "Show Options", movies)
             movie_selection = movie_select(movies)
             movies_with_hours = mins_to_hours(movies)
-            print_movie_length(movies_with_hours, movie_selection)
+            print_functions(menu_option, movie_selection,
+                            movies_with_hours)
         # If menu_option is 4 call functions to print movies
         elif menu_option == 4:
             movies_with_hours = mins_to_hours(movies)
-            print_movies(movies_with_hours)
+            print_functions(menu_option, "N/A",
+                            movies_with_hours)
         # Otherwise print error message
         else:
             print("\nPlease enter a valid option!\n")
