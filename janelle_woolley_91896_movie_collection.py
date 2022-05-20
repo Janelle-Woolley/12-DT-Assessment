@@ -14,6 +14,7 @@ def get_menu_option():
     """
     MINIMUM_LENGTH = 1
     choices = [1, 2, 3, 4, 0]
+
     # Contiues to loop until an option is chosen
     getting_choice = True
     while getting_choice:
@@ -30,13 +31,12 @@ def get_menu_option():
             # Check if the input is an option, if so end loop
             if choice in choices:
                 getting_choice = False
-
             # Otherwise print error message
             else:
                 print("\nPlease enter a valid option!\n")
 
         except ValueError:
-            print("\nPlease enter a valid option!\n")
+            print("\nPlease enter your option as a number e.g. 2\n")
 
     return choice
 
@@ -58,13 +58,12 @@ def movie_select(dictionary):
             # Check if the input is an option, if so end loop
             if movie_selected in dictionary:
                 getting_movie_selection = False
-
             # Otherwise print error message
             else:
                 print("\nPlease enter a valid option!")
 
         except ValueError:
-            print("\nPlease enter a valid option!")
+            print("\nPlease enter your option as a number e.g. 2")
 
     return movie_selected
 
@@ -89,6 +88,8 @@ def mins_to_hours(dictionary):
         hours_count = 0
         while getting_hours:
             if mins_runtime > 60:
+                # Is taking 60 away from the minutes and is adding
+                # to the hour count each time it loops
                 mins_runtime = mins_runtime - AMOUNT_MINS_IN_HOURS
                 hours_count = hours_count + ADD_HOUR
             else:
@@ -106,7 +107,6 @@ def mins_to_hours(dictionary):
                                        "Director": director,
                                        "Run Time": runtime_string}})
 
-    # Return new dictionary
     return hours_dictionary
 
 
@@ -127,12 +127,16 @@ def print_functions(menu_option, movie_selection, dictionary):
     # Checks if the print function is being called for option 3
     # and isn't to show options
     elif menu_option == 3 and movie_selection != "Show Options":
+        # Prints name and runtime
         movie_info = dictionary[movie_selection]
         movie = movie_info["Title"]
         runtime = movie_info["Run Time"]
         print("\n{}\t{}\t{}".format(movie_selection, movie, runtime))
 
+    # Checks if the print function is being called for option 4
     elif menu_option == 4:
+        # loops through dictionary printing out
+        # movie name, director and runtime
         for key in dictionary.keys():
             movie_info = dictionary[key]
             movie = movie_info["Title"]
@@ -142,7 +146,7 @@ def print_functions(menu_option, movie_selection, dictionary):
                                           director, runtime))
 
     else:
-        print("Sorry Something Has Gone Wrong")
+        print("Sorry Something Has Gone Wrong Try Again Later \(*~*)/")
 
 
 # Edit Movie Length Function
@@ -171,17 +175,16 @@ def edit_movie_length(dictionary, key):
             # Check is runtime is between the min and max
             if new_runtime not in range(MIN_RUNTIME, MAX_RUNTIME):
                 print("\nPlease enter a time between 1 and 299 mins")
-
-            # Check if runtime is not equal to original length
-            elif new_runtime != runtime:
+            # Check if the new runtime is equal to the old runtime
+            elif new_runtime == runtime:
+                print("\nThe movie already has that runtime"
+                      " please enter a new runtime")
+            # Input meets all the requirements so end loop
+            else:
                 getting_runtime = False
 
-            # Otherwise print error message
-            else:
-                print("\nPlease enter a time between 1 and 299 mins")
-
         except ValueError:
-            print("\nPlease enter the time in minutes")
+            print("\nPlease enter the time as a number e.g. 60")
 
     # Update dictionary
     dictionary.update({key: {"Title": movie,
@@ -196,13 +199,15 @@ def add_movie(dictionary):
     Then adds them to the dictionary
     """
     MIN_MOVIE_NAME_LENGTH = MIN_RUNTIME = ADD_TO_GET_KEY = 1
-    MIN_DIRECTOR_NAME_LENGTH = 3
+    MIN_DIRECTOR_NAME_LENGTH = 5
     MAX_RUNTIME = 300
+
     # Keep looping until input is allowed
     getting_movie_name = True
     while getting_movie_name:
         # Ask user for movie_name input
         movie_name = input("Please enter the name of the movie: ")
+
         # Check if input is too short (less than 1 characters)
         if len(movie_name) > MIN_MOVIE_NAME_LENGTH:
             # If not end loop
@@ -211,7 +216,7 @@ def add_movie(dictionary):
         else:
             print("\nPlease enter a movie name!")
 
-    # Does the same as above but for getting the director name
+    # Does the same as above but for getting director name
     getting_director = True
     while getting_director:
         director = input("Please enter the name of the director: ")
@@ -220,6 +225,7 @@ def add_movie(dictionary):
         else:
             print("\nPlease enter a valid name!")
 
+    # Keeps looping until input is allowed
     getting_runtime = True
     while getting_runtime:
         # Use try and except to make sure the input is a number
@@ -230,11 +236,12 @@ def add_movie(dictionary):
             # Check is runtime is between the min and max
             if runtime in range(MIN_RUNTIME, MAX_RUNTIME):
                 getting_runtime = False
+            # Otherwise print error message
             else:
                 print("\nPlease enter a time between 1 and 299 mins")
 
         except ValueError:
-            print("\nPlease enter the time in minutes")
+            print("\nPlease enter the time as a number e.g. 60")
 
     # Use the length of the dictionary to determine the movie key
     key = len(dictionary) + ADD_TO_GET_KEY
